@@ -28,12 +28,12 @@
                 charge += i;
                 return null;
             }
-            else if ((kindOfDrink == Drink.DIET_COKE) && (quantityOfDietCoke == 0))
+            if ((kindOfDrink == Drink.DIET_COKE) && (quantityOfDietCoke == 0))
             {
                 charge += i;
                 return null;
             }
-            else if ((kindOfDrink == Drink.TEA) && (quantityOfTea == 0))
+            if ((kindOfDrink == Drink.TEA) && (quantityOfTea == 0))
             {
                 charge += i;
                 return null;
@@ -51,7 +51,7 @@
                 // 100円玉を釣銭に使える
                 numberOf100Yen++;
             }
-            else if (i == 500)
+            if (i == 500)
             {
                 // 400円のおつり
                 charge += (i - 100);
@@ -63,11 +63,11 @@
             {
                 quantityOfCoke--;
             }
-            else if (kindOfDrink == Drink.DIET_COKE)
+            if (kindOfDrink == Drink.DIET_COKE)
             {
                 quantityOfDietCoke--;
             }
-            else
+            if (kindOfDrink == Drink.TEA)
             {
                 quantityOfTea--;
             }
