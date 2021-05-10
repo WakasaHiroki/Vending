@@ -13,6 +13,9 @@
             this.kind = kind;
         }
 
-        public int Kind { get { return kind; } }
+        public bool Is(int kindOfDrink)
+        {
+            return this.kind == kindOfDrink;
+        }
     }
 }
