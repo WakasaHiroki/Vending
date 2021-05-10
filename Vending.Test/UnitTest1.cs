@@ -13,7 +13,7 @@ namespace Vending.Test
 
             Assert.True(
                 coke != null &&
-                coke.Kind == Drink.COKE
+                coke.Is(Drink.COKE)
                 );
         }
 
@@ -78,7 +78,7 @@ namespace Vending.Test
 
             // íﬁëKÇ»Çµ Ç¬Ç¢Ç≈Ç…COKEÇ‡ç›å…êÿÇÍÇ»ÇÃÇ≈DIET_COKEÇ…ïœçX
             var dietCoke = vm.Buy(500, Drink.DIET_COKE);
-            
+
             Assert.NotNull(coke);
             Assert.Null(dietCoke);
         }
