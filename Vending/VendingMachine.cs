@@ -2,83 +2,87 @@
 {
     public class VendingMachine
     {
-        private int quantityOfCoke = 5;
-        private int quantityOfDietCoke = 5;
-        private int quantityOfTea = 5;
-        private int numberOf100Yen = 10;
-        private int charge = 0;
+        private int stockOfCoke = 5; // コーラの在庫数
+        private int stockOfDietCoke = 5; // ダイエットコーラの在庫数
+        private int stockOfTea = 5; // お茶の在庫数
+        private int stockOf100Yen = 10; // 100円玉の在庫
+        private int change = 0; // お釣り
 
         /// <summary>
         /// ジュースを購入する。
         /// </summary>
-        /// <param name="i">投入金額。100円と500円のみ受け付ける</param>
+        /// <param name="payment">投入金額。100円と500円のみ受け付ける</param>
         /// <param name="kindOfDrink">ジュースの種類。コーラ、ダイエットコーラ、お茶が指定できる。</param>
         /// <returns>指定したジュース。在庫不足や釣銭不足で変えなかった場合はnullが返される。</returns>
-        public Drink Buy(int i, int kindOfDrink)
+        public Drink Buy(int payment, int kindOfDrink)
         {
             // 100円と500円だけ受け付ける
-            if ((i != 100) && (i != 500))
+            if ((payment != 100) && (payment != 500))
             {
-                charge += 1;
+                change += payment;
                 return null;
             }
 
-            if ((kindOfDrink == Drink.COKE) && (quantityOfCoke == 0))
+            if ((kindOfDrink == Drink.COKE) && (stockOfCoke == 0))
             {
-                charge += i;
+                change += payment;
                 return null;
             }
-            if ((kindOfDrink == Drink.DIET_COKE) && (quantityOfDietCoke == 0))
+            if ((kindOfDrink == Drink.DIET_COKE) && (stockOfDietCoke == 0))
             {
-                charge += i;
+                change += payment;
                 return null;
             }
-            if ((kindOfDrink == Drink.TEA) && (quantityOfTea == 0))
+            if ((kindOfDrink == Drink.TEA) && (stockOfTea == 0))
             {
-                charge += i;
+                change += payment;
                 return null;
             }
 
             // 釣銭不足
-            if (i == 500 && numberOf100Yen < 4)
+            if (payment == 500 && stockOf100Yen < 4)
             {
-                charge += i;
+                change += payment;
                 return null;
             }
 
-            if (i == 100)
+            if (payment == 100)
             {
                 // 100円玉を釣銭に使える
-                numberOf100Yen++;
+                stockOf100Yen++;
             }
-            if (i == 500)
+            if (payment == 500)
             {
                 // 400円のおつり
-                charge += (i - 100);
+                change += (payment - 100);
                 // 100円玉を釣銭に使える
-                numberOf100Yen -= (i - 100) / 100;
+                stockOf100Yen -= (payment - 100) / 100;
             }
 
             if (kindOfDrink == Drink.COKE)
             {
-                quantityOfCoke--;
+                stockOfCoke--;
             }
             if (kindOfDrink == Drink.DIET_COKE)
             {
-                quantityOfDietCoke--;
+                stockOfDietCoke--;
             }
             if (kindOfDrink == Drink.TEA)
             {
-                quantityOfTea--;
+                stockOfTea--;
             }
 
             return new Drink(kindOfDrink);
         }
 
+        /// <summary>
+        /// お釣りを取り出す
+        /// </summary>
+        /// <returns>お釣りの金額</returns>
         public int Refund()
         {
-            int result = charge;
-            charge = 0;
+            int result = change;
+            change = 0;
             return result;
         }
     }
