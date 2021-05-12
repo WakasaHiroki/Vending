@@ -44,7 +44,7 @@ namespace Vending.Test
             Assert.Null(drink);
         }
 
-        [Fact(DisplayName = "’Ş‘KØ‚ê")]
+        [Fact(DisplayName = "’Ş‘KØ‚ê1")]
         public void Test4()
         {
             var vm = new VendingMachine();
@@ -53,6 +53,7 @@ namespace Vending.Test
             for (var i = 0; i < cnt; i++)
             {
                 _ = vm.Buy(500, Drink.COKE);
+                _ = vm.Refund();
             }
 
             var drink = vm.Buy(500, Drink.COKE);
@@ -60,21 +61,26 @@ namespace Vending.Test
             Assert.Null(drink);
         }
 
-        [Fact(DisplayName = "’Ş‘KØ‚ê")]
+        [Fact(DisplayName = "’Ş‘KØ‚ê2")]
         public void Test5()
         {
             var vm = new VendingMachine();
 
             // ’Ş‘K800‰~Á”ï c‚è200‰~
             _ = vm.Buy(500, Drink.COKE);
+            _ = vm.Refund();
             _ = vm.Buy(500, Drink.COKE);
+            _ = vm.Refund();
 
             // ’Ş‘K200‰~’Ç‰Á c‚è400‰~
             _ = vm.Buy(100, Drink.COKE);
+            _ = vm.Refund();
             _ = vm.Buy(100, Drink.COKE);
+            _ = vm.Refund();
 
             // ’Ş‘K400‰~Á”ï c‚è0‰~
             var coke = vm.Buy(500, Drink.COKE);
+            _ = vm.Refund();
 
             // ’Ş‘K‚È‚µ ‚Â‚¢‚Å‚ÉCOKE‚àİŒÉØ‚ê‚È‚Ì‚ÅDIET_COKE‚É•ÏX
             var dietCoke = vm.Buy(500, Drink.DIET_COKE);
