@@ -1,21 +1,17 @@
 ﻿namespace Vending
 {
-    public class Drink
+    public sealed class Drink
     {
-        public static readonly int COKE = 0;
-        public static readonly int DIET_COKE = 1;
-        public static readonly int TEA = 2;
+        private readonly KindOfDrink kind;
 
-        private int kind;
-
-        public Drink(int kind)
+        public Drink(KindOfDrink kind)
         {
             this.kind = kind;
         }
 
-        public bool Is(int kindOfDrink)
+        public bool Is(KindOfDrink kind)
         {
-            return this.kind == kindOfDrink;
+            return this.kind.Is(kind);
         }
     }
 }

@@ -1,12 +1,36 @@
-﻿namespace Vending
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace Vending
 {
     public class VendingMachine
     {
-        private int stockOfCoke = 5; // コーラの在庫数
-        private int stockOfDietCoke = 5; // ダイエットコーラの在庫数
-        private int stockOfTea = 5; // お茶の在庫数
-        private int stockOf100Yen = 10; // 100円玉の在庫
-        private int change = 0; // お釣り
+        private List<Drink> stockOfCoke = new List<Drink>(); // コーラの在庫数
+        private List<Drink> stockOfDietCoke = new List<Drink>(); // ダイエットコーラの在庫数
+        private List<Drink> stockOfTea = new List<Drink>(); // お茶の在庫数
+        private List<Coin> stockOf100Yen = new List<Coin>(); // 100円玉の在庫
+        private List<Coin> stockOf500Yen = new List<Coin>(); // 500円玉の在庫
+        private List<Coin> change = new List<Coin>(); // お釣り
+
+        public VendingMachine()
+        {
+            for (var i = 0; i < 5; i++)
+            {
+                stockOfCoke.Add(new Drink(KindOfDrink.COKE));
+            }
+            for (var i = 0; i < 5; i++)
+            {
+                stockOfDietCoke.Add(new Drink(KindOfDrink.DIET_COKE));
+            }
+            for (var i = 0; i < 5; i++)
+            {
+                stockOfTea.Add(new Drink(KindOfDrink.TEA));
+            }
+            for (var i = 0; i < 10; i++)
+            {
+                stockOf100Yen.Add(Coin.Yen100);
+            }
+        }
 
         /// <summary>
         /// ジュースを購入する。
@@ -14,62 +38,58 @@
         /// <param name="payment">投入金額。100円と500円のみ受け付ける</param>
         /// <param name="kindOfDrink">ジュースの種類。コーラ、ダイエットコーラ、お茶が指定できる。</param>
         /// <returns>指定したジュース。在庫不足や釣銭不足で変えなかった場合はnullが返される。</returns>
-        public Drink Buy(int payment, int kindOfDrink)
+        public Drink Buy(Coin payment, KindOfDrink kindOfDrink)
         {
-            // 100円と500円だけ受け付ける
-            if ((payment != 100) && (payment != 500))
-            {
-                change += payment;
-                return null;
-            }
+            change.Add(payment);
 
-            if ((kindOfDrink == Drink.COKE) && (stockOfCoke == 0))
+            if (kindOfDrink.Is(KindOfDrink.COKE) && stockOfCoke.Count == 0)
             {
-                change += payment;
                 return null;
             }
-            if ((kindOfDrink == Drink.DIET_COKE) && (stockOfDietCoke == 0))
+            if (kindOfDrink.Is(KindOfDrink.DIET_COKE) && stockOfDietCoke.Count == 0)
             {
-                change += payment;
                 return null;
             }
-            if ((kindOfDrink == Drink.TEA) && (stockOfTea == 0))
+            if (kindOfDrink.Is(KindOfDrink.TEA) && stockOfTea.Count == 0)
             {
-                change += payment;
                 return null;
             }
 
             // 釣銭不足
-            if (payment == 500 && stockOf100Yen < 4)
+            if (payment.Is(Coin.Yen500) && stockOf100Yen.Count < 4)
             {
-                change += payment;
                 return null;
             }
 
-            if (payment == 100)
+            if (payment.Is(Coin.Yen100))
             {
-                // 100円玉を釣銭に使える
-                stockOf100Yen++;
+                // 100円玉を次の釣銭に使える
+                stockOf100Yen.Add(payment);
+                change.Remove(payment);
             }
-            if (payment == 500)
+            if (payment.Is(Coin.Yen500))
             {
-                // 400円のおつり
-                change += (payment - 100);
-                // 100円玉を釣銭に使える
-                stockOf100Yen -= (payment - 100) / 100;
+                // 500円を自動販売機内にストック
+                stockOf500Yen.Add(payment);
+                change.Remove(payment);
+
+                // 100円のストックから400円をお釣りに移動
+                var yen400 = stockOf100Yen.Take(4);
+                change.AddRange(yen400);
+                stockOf100Yen.RemoveRange(0, 4);
             }
 
-            if (kindOfDrink == Drink.COKE)
+            if (kindOfDrink == KindOfDrink.COKE)
             {
-                stockOfCoke--;
+                stockOfCoke.RemoveAt(0);
             }
-            if (kindOfDrink == Drink.DIET_COKE)
+            if (kindOfDrink == KindOfDrink.DIET_COKE)
             {
-                stockOfDietCoke--;
+                stockOfDietCoke.RemoveAt(0);
             }
-            if (kindOfDrink == Drink.TEA)
+            if (kindOfDrink == KindOfDrink.TEA)
             {
-                stockOfTea--;
+                stockOfTea.RemoveAt(0);
             }
 
             return new Drink(kindOfDrink);
@@ -79,10 +99,11 @@
         /// お釣りを取り出す
         /// </summary>
         /// <returns>お釣りの金額</returns>
-        public int Refund()
+        public List<Coin> Refund()
         {
-            int result = change;
-            change = 0;
+            var result = new List<Coin>(change);
+            change.Clear();
+
             return result;
         }
     }
