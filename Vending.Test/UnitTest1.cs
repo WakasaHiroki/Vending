@@ -1,4 +1,5 @@
 using Xunit;
+using System.Linq;
 
 namespace Vending.Test
 {
@@ -9,11 +10,11 @@ namespace Vending.Test
         {
             var vm = new VendingMachine();
 
-            var coke = vm.Buy(500, Drink.COKE);
+            var coke = vm.Buy(Coin.Yen500, KindOfDrink.COKE);
 
             Assert.True(
                 coke != null &&
-                coke.Is(Drink.COKE)
+                coke.Is(KindOfDrink.COKE)
                 );
         }
 
@@ -22,10 +23,25 @@ namespace Vending.Test
         {
             var vm = new VendingMachine();
 
-            _ = vm.Buy(500, Drink.COKE);
-            var charge = vm.Refund();
+            _ = vm.Buy(Coin.Yen500, KindOfDrink.COKE);
+            var change = vm.Refund();
 
-            Assert.Equal(400, charge);
+            var changeAmount = change.Sum(x => x.Amount());
+
+            Assert.Equal(400, changeAmount);
+        }
+
+        [Fact(DisplayName = "‚¨’Ş‚è‚È‚µ")]
+        public void Test6()
+        {
+            var vm = new VendingMachine();
+
+            _ = vm.Buy(Coin.Yen100, KindOfDrink.COKE);
+            var change = vm.Refund();
+
+            var changeAmount = change.Sum(x => x.Amount());
+
+            Assert.Equal(0, changeAmount);
         }
 
         [Fact(DisplayName = "İŒÉØ‚ê")]
@@ -36,10 +52,10 @@ namespace Vending.Test
             int cnt = 5;
             for (var i = 0; i < cnt; i++)
             {
-                _ = vm.Buy(100, Drink.COKE);
+                _ = vm.Buy(Coin.Yen100, KindOfDrink.COKE);
             }
 
-            var drink = vm.Buy(100, Drink.COKE);
+            var drink = vm.Buy(Coin.Yen100, KindOfDrink.COKE);
 
             Assert.Null(drink);
         }
@@ -52,11 +68,11 @@ namespace Vending.Test
             int cnt = 2;
             for (var i = 0; i < cnt; i++)
             {
-                _ = vm.Buy(500, Drink.COKE);
+                _ = vm.Buy(Coin.Yen500, KindOfDrink.COKE);
                 _ = vm.Refund();
             }
 
-            var drink = vm.Buy(500, Drink.COKE);
+            var drink = vm.Buy(Coin.Yen500, KindOfDrink.COKE);
 
             Assert.Null(drink);
         }
@@ -67,23 +83,23 @@ namespace Vending.Test
             var vm = new VendingMachine();
 
             // ’Ş‘K800‰~Á”ï c‚è200‰~
-            _ = vm.Buy(500, Drink.COKE);
+            _ = vm.Buy(Coin.Yen500, KindOfDrink.COKE);
             _ = vm.Refund();
-            _ = vm.Buy(500, Drink.COKE);
+            _ = vm.Buy(Coin.Yen500, KindOfDrink.COKE);
             _ = vm.Refund();
 
             // ’Ş‘K200‰~’Ç‰Á c‚è400‰~
-            _ = vm.Buy(100, Drink.COKE);
+            _ = vm.Buy(Coin.Yen100, KindOfDrink.COKE);
             _ = vm.Refund();
-            _ = vm.Buy(100, Drink.COKE);
+            _ = vm.Buy(Coin.Yen100, KindOfDrink.COKE);
             _ = vm.Refund();
 
             // ’Ş‘K400‰~Á”ï c‚è0‰~
-            var coke = vm.Buy(500, Drink.COKE);
+            var coke = vm.Buy(Coin.Yen500, KindOfDrink.COKE);
             _ = vm.Refund();
 
             // ’Ş‘K‚È‚µ ‚Â‚¢‚Å‚ÉCOKE‚àİŒÉØ‚ê‚È‚Ì‚ÅDIET_COKE‚É•ÏX
-            var dietCoke = vm.Buy(500, Drink.DIET_COKE);
+            var dietCoke = vm.Buy(Coin.Yen500, KindOfDrink.DIET_COKE);
 
             Assert.NotNull(coke);
             Assert.Null(dietCoke);
