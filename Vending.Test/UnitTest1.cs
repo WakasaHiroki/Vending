@@ -26,7 +26,7 @@ namespace Vending.Test
             _ = vm.Buy(Coin.Yen500, KindOfDrink.COKE);
             var change = vm.Refund();
 
-            var changeAmount = change.Sum(x => x.Amount());
+            var changeAmount = change.Amount();
 
             Assert.Equal(400, changeAmount);
         }
@@ -39,7 +39,7 @@ namespace Vending.Test
             _ = vm.Buy(Coin.Yen100, KindOfDrink.COKE);
             var change = vm.Refund();
 
-            var changeAmount = change.Sum(x => x.Amount());
+            var changeAmount = change.Amount();
 
             Assert.Equal(0, changeAmount);
         }
