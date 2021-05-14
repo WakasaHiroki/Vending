@@ -21,11 +21,6 @@ namespace Vending
             return value == 0;
         }
 
-        public bool Is(Quantity quantity)
-        {
-            return value == quantity.value;
-        }
-
         public bool LessThan(Quantity quantity)
         {
             return value < quantity.value;

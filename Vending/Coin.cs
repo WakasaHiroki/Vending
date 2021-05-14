@@ -2,7 +2,7 @@
 
 namespace Vending
 {
-    public sealed class Coin
+    public sealed class Coin : IComparable
     {
         public static readonly Coin Yen100 = new Coin(amount: 100);
         public static readonly Coin Yen500 = new Coin(amount: 500);
@@ -19,14 +19,14 @@ namespace Vending
             this.amount = amount;
         }
 
-        public bool Is(Coin coin)
-        {
-            return amount == coin.amount;
-        }
-
         public int Amount()
         {
             return amount;
+        }
+
+        public int CompareTo(object other)
+        {
+            return amount.CompareTo(((Coin)other).amount);
         }
     }
 }
