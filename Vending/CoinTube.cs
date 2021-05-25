@@ -2,34 +2,34 @@
 {
     public sealed class CoinTube
     {
-        private Quantity quantity;
-        private readonly Coin coin;
+        private Quantity _quantity;
+        private readonly Coin _coin;
 
         public CoinTube(Coin coin)
         {
-            quantity = new Quantity(0);
-            this.coin = coin;
+            _quantity = new Quantity(0);
+            _coin = coin;
         }
 
         public bool IsEmpty()
         {
-            return quantity.IsNone();
+            return _quantity.IsNone();
         }
 
         public void PutIn()
         {
-            quantity = quantity.Add(new Quantity(1));
+            _quantity = _quantity.Add(new Quantity(1));
         }
 
         public Coin PutOut()
         {
-            quantity = quantity.Subtract(new Quantity(1));
-            return coin;
+            _quantity = _quantity.Subtract(new Quantity(1));
+            return _coin;
         }
 
         public Quantity Quantity()
         {
-            return quantity;
+            return _quantity;
         }
     }
 }

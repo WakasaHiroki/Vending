@@ -4,7 +4,7 @@ namespace Vending
 {
     public sealed class Quantity
     {
-        private readonly int value;
+        private readonly int _value;
 
         public Quantity(int value)
         {
@@ -13,17 +13,17 @@ namespace Vending
                 throw new Exception("数量は0以上にしてください。");
             }
 
-            this.value = value;
+            _value = value;
         }
 
         public bool IsNone()
         {
-            return value == 0;
+            return _value == 0;
         }
 
         public bool LessThan(Quantity quantity)
         {
-            return value < quantity.value;
+            return _value < quantity._value;
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Vending
         /// <returns></returns>
         public Quantity Add(Quantity quantity)
         {
-            return new Quantity(value + quantity.value);
+            return new Quantity(_value + quantity._value);
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Vending
         public Quantity Subtract(Quantity quantity)
         {
             // 減算してマイナスになったらコンストラクタで弾かれる
-            return new Quantity(value - quantity.value);
+            return new Quantity(_value - quantity._value);
         }
     }
 }

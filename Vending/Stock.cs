@@ -6,28 +6,28 @@ namespace Vending
 {
     public sealed class Stock
     {
-        private readonly List<Drink> drinks = new List<Drink>();
-        private readonly KindOfDrink kind;
+        private readonly List<Drink> _drinks = new List<Drink>();
+        private readonly KindOfDrink _kind;
 
         public Stock(KindOfDrink kind)
         {
-            this.kind = kind;
+            _kind = kind;
         }
 
         public void Replenish(Quantity maxQuantity)
         {
-            var quantity = new Quantity(drinks.Count);
+            var quantity = new Quantity(_drinks.Count);
 
             while (quantity.LessThan(maxQuantity))
             {
-                drinks.Add(new Drink(kind));
-                quantity = new Quantity(drinks.Count);
+                _drinks.Add(new Drink(_kind));
+                quantity = new Quantity(_drinks.Count);
             }
         }
 
         public bool IsEmpty()
         {
-            return drinks.Count == 0;
+            return _drinks.Count == 0;
         }
 
         public Drink PutOut()
@@ -37,9 +37,9 @@ namespace Vending
                 throw new Exception("在庫がありません。");
             }
 
-            var drink = drinks.First();
+            var drink = _drinks.First();
 
-            drinks.Remove(drink);
+            _drinks.Remove(drink);
             return drink;
         }
     }

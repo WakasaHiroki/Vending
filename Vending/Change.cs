@@ -5,16 +5,16 @@ namespace Vending
 {
     public sealed class Change
     {
-        private readonly List<Coin> coins = new List<Coin>();
+        private readonly List<Coin> _coins = new List<Coin>();
 
         public void Add(Coin coin)
         {
-            coins.Add(coin);
+            _coins.Add(coin);
         }
 
         public int Amount()
         {
-            return coins.Sum(x => x.Amount());
+            return _coins.Sum(x => x.Amount());
         }
     }
 }

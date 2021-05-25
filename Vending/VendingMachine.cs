@@ -2,8 +2,8 @@
 {
     public class VendingMachine
     {
-        private readonly Storage storage = new Storage(); // 飲み物の格納装置
-        private readonly CoinMech coinMech = new CoinMech(); // コインメック(投入された硬貨、お釣りの返却を扱う装置)
+        private readonly Storage _storage = new Storage(); // 飲み物の格納装置
+        private readonly CoinMech _coinMech = new CoinMech(); // コインメック(投入された硬貨、お釣りの返却を扱う装置)
 
         /// <summary>
         /// ジュースを購入する。
@@ -13,21 +13,21 @@
         /// <returns>指定したジュース。在庫不足や釣銭不足で変えなかった場合はnullが返される。</returns>
         public Drink Buy(Coin payment, KindOfDrink kindOfDrink)
         {
-            coinMech.PutIn(payment);
+            _coinMech.PutIn(payment);
 
             // 在庫確認
-            if (!storage.Has(kindOfDrink))
+            if (!_storage.Has(kindOfDrink))
             {
                 return null;
             }
 
             // 釣銭不足確認
-            if (!coinMech.CanRefund())
+            if (!_coinMech.CanRefund())
             {
                 return null;
             }
 
-            return storage.PutOut(kindOfDrink);
+            return _storage.PutOut(kindOfDrink);
         }
 
         /// <summary>
@@ -36,7 +36,7 @@
         /// <returns>お釣り</returns>
         public Change Refund()
         {
-            return coinMech.Refund();
+            return _coinMech.Refund();
         }
     }
 }

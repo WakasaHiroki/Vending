@@ -7,7 +7,7 @@ namespace Vending
         public static readonly Coin Yen100 = new Coin(amount: 100);
         public static readonly Coin Yen500 = new Coin(amount: 500);
 
-        private readonly int amount;
+        private readonly int _amount;
 
         private Coin(int amount)
         {
@@ -16,17 +16,17 @@ namespace Vending
                 throw new Exception("100円玉と500円玉のみ使用できます。");
             }
 
-            this.amount = amount;
+            _amount = amount;
         }
 
         public int Amount()
         {
-            return amount;
+            return _amount;
         }
 
         public int CompareTo(object other)
         {
-            return amount.CompareTo(((Coin)other).amount);
+            return _amount.CompareTo(((Coin)other)._amount);
         }
     }
 }

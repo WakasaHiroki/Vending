@@ -2,16 +2,16 @@
 {
     public sealed class Drink
     {
-        private readonly KindOfDrink kind;
+        private readonly KindOfDrink _kind;
 
         public Drink(KindOfDrink kind)
         {
-            this.kind = kind;
+            _kind = kind;
         }
 
         public bool Is(KindOfDrink kind)
         {
-            return this.kind.Is(kind);
+            return _kind.Is(kind);
         }
     }
 }

@@ -5,21 +5,21 @@ namespace Vending
 {
     public sealed class Charge
     {
-        private readonly List<Coin> coins = new List<Coin>();
+        private readonly List<Coin> _coins = new List<Coin>();
 
         public void PutIn(Coin coin)
         {
-            coins.Add(coin);
+            _coins.Add(coin);
         }
 
         public void Clear()
         {
-            coins.Clear();
+            _coins.Clear();
         }
 
         public int Amount()
         {
-            return coins.Sum(x => x.Amount());
+            return _coins.Sum(x => x.Amount());
         }
     }
 }

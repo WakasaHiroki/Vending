@@ -5,7 +5,7 @@ namespace Vending
 {
     public sealed class Storage
     {
-        private readonly Dictionary<KindOfDrink, Stock> stocks = new Dictionary<KindOfDrink, Stock>();
+        private readonly Dictionary<KindOfDrink, Stock> _stocks = new Dictionary<KindOfDrink, Stock>();
 
         public Storage()
         {
@@ -18,14 +18,14 @@ namespace Vending
             stockOfDietCoke.Replenish(new Quantity(5));
             stockOfTea.Replenish(new Quantity(5));
 
-            stocks[KindOfDrink.COKE] = stockOfCoke;
-            stocks[KindOfDrink.DIET_COKE] = stockOfDietCoke;
-            stocks[KindOfDrink.TEA] = stockOfTea;
+            _stocks[KindOfDrink.COKE] = stockOfCoke;
+            _stocks[KindOfDrink.DIET_COKE] = stockOfDietCoke;
+            _stocks[KindOfDrink.TEA] = stockOfTea;
         }
 
         public bool Has(KindOfDrink kindOfDrink)
         {
-            if (!stocks.TryGetValue(kindOfDrink, out var stock))
+            if (!_stocks.TryGetValue(kindOfDrink, out var stock))
             {
                 throw new Exception("該当のジュースを取り扱っていません。");
             }
@@ -35,7 +35,7 @@ namespace Vending
 
         public Drink PutOut(KindOfDrink kindOfDrink)
         {
-            if (!stocks.TryGetValue(kindOfDrink, out var stock))
+            if (!_stocks.TryGetValue(kindOfDrink, out var stock))
             {
                 throw new Exception("該当のジュースを取り扱っていません。");
             }

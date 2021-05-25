@@ -8,21 +8,21 @@ namespace Vending
         public static readonly KindOfDrink DIET_COKE = new KindOfDrink(1);
         public static readonly KindOfDrink TEA = new KindOfDrink(2);
 
-        private readonly int kind;
+        private readonly int _kind;
 
         private KindOfDrink(int kind)
         {
-            this.kind = kind;
+            _kind = kind;
         }
 
         public bool Is(KindOfDrink kindOfDrink)
         {
-            return kind == kindOfDrink.kind;
+            return _kind == kindOfDrink._kind;
         }
 
         public int CompareTo(object other)
         {
-            return kind.CompareTo(((KindOfDrink)other).kind);
+            return _kind.CompareTo(((KindOfDrink)other)._kind);
         }
     }
 }
