@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Vending.Drinks;
 
-namespace Vending
+namespace Vending.Storages
 {
     public sealed class Storage
     {

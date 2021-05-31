@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Vending
+namespace Vending.CoinMechs
 {
     public sealed class CoinMech
     {

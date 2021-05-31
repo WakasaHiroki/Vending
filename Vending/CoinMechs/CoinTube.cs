@@ -1,4 +1,4 @@
-﻿namespace Vending
+﻿namespace Vending.CoinMechs
 {
     public sealed class CoinTube
     {
