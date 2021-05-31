@@ -1,4 +1,4 @@
-﻿namespace Vending
+﻿namespace Vending.Drinks
 {
     public sealed class Drink
     {

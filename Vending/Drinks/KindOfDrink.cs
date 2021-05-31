@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Vending
+namespace Vending.Drinks
 {
     public sealed class KindOfDrink : IComparable
     {

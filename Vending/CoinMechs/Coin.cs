@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Vending
+namespace Vending.CoinMechs
 {
     public sealed class Coin : IComparable
     {

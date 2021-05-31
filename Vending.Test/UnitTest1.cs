@@ -1,5 +1,7 @@
 using Xunit;
 using System.Linq;
+using Vending.CoinMechs;
+using Vending.Drinks;
 
 namespace Vending.Test
 {

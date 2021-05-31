@@ -1,4 +1,8 @@
-﻿namespace Vending
+﻿using Vending.CoinMechs;
+using Vending.Drinks;
+using Vending.Storages;
+
+namespace Vending
 {
     public class VendingMachine
     {
